@@ -1,4 +1,4 @@
-(function () {
+(function (dispatchEventOG) {
   if (document.readyState !== 'loading')
     throw new Error('new ParserObserver(..) can only be created while document is loading');
 
@@ -45,8 +45,6 @@
     }
   }
 
-  const dispatchEventOG = dispatchEvent;
-
   function makeOnMoObserver() {
     const c = new Comment();                                                               //MO-readystatechange race #1
     const touchDom = _ => document.body.append(c);                                         //MO-readystatechange race #1
@@ -83,4 +81,4 @@
 
   const mo = new MutationObserver(makeOnMoObserver());
   mo.observe(document.documentElement, {childList: true, subtree: true});
-})();
+})(dispatchEvent);
