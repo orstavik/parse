@@ -1,0 +1,21 @@
+<script src="../parse.js"></script>
+<script>
+
+  function test(e) {
+    console.log(Array.from(e.endedNodes()).map(n => n.nodeName));
+    console.log(Array.from(e.openNodes()).map(n => n.tagName));
+  }
+  window.addEventListener('parser-break', test, true);
+  document.addEventListener('readystatechange', _ => console.log(document.readyState));
+</script>
+
+<h3>Test of ParserObserver endedNodes</h3>
+<main>
+  <div>
+    <script id="3">console.log("a")</script>
+    <span>a
+      <b>hello sunshine</b>b
+    </span>c
+  </div>d
+  <script id="6">console.log("b")</script>
+</main>

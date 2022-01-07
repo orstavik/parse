@@ -1,0 +1,14 @@
+<script src="../parse.js"></script>
+<script>
+  window.addEventListener('parser-break',e=> console.log(e.target === document ? 'the end' : e.target.textContent), true);
+  document.addEventListener('readystatechange', () => console.log(document.readyState), {once: true});
+
+  customElements.define('web-comp', class WebComp extends HTMLElement {
+    connectedCallback() {
+      console.log("connected");
+    }
+  });
+</script>
+
+<h3>Test of ParserBreakEvent with connectedCallback</h3>
+<!--break--><web-comp></web-comp><web-comp></web-comp>

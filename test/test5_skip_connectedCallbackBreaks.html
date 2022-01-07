@@ -1,0 +1,35 @@
+<script src="../parse.js"></script>
+<script>
+
+
+  function check(e) {
+    const txt = e.target === document ? "html" : e.target.textContent[0];
+    return console.log(txt), Promise.resolve().then(()=> console.log("m" + txt));
+  }
+  window.addEventListener('parser-break', check, true);
+  document.addEventListener('readystatechange', _ => console.log(document.readyState), {once: true});
+
+  customElements.define('comp-constructor', class CompConstructor extends HTMLElement {
+    constructor() {
+      super();
+      console.log('x1');
+    }
+    connectedCallback() {
+      console.log('x2');
+    }
+  });
+  customElements.define('comp-connected-only', class CompConnected extends HTMLElement {
+    connectedCallback() {
+      console.log('y');
+    }
+  });
+</script>
+
+<body>
+<h3>Test of ParserObserver with web-comp.connectedCallback close together</h3>
+
+<!--1--><comp-constructor></comp-constructor><!--2--><comp-connected-only></comp-connected-only>
+<!--3--><comp-constructor>4</comp-constructor><comp-connected-only></comp-connected-only>
+<!--5--><comp-connected-only>6</comp-connected-only><comp-constructor></comp-constructor>
+<!--7--><comp-connected-only></comp-connected-only><comp-connected-only></comp-connected-only>
+</body>

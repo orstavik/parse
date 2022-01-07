@@ -1,0 +1,41 @@
+<script>
+  function test(e) {
+    console.log('added', ...Array.from(e.addedNodes()).map(n => n.nodeName));
+    console.log('ended', ...Array.from(e.endedNodes()).map(n => n.nodeName));
+    console.log('open', ...Array.from(e.openNodes()).map(n => n.tagName));
+  }
+  window.addEventListener('parser-break', test, {capture: true});
+</script>
+<script src="../parse.js"></script>
+<script>
+  document.addEventListener('readystatechange', _ => console.log(document.readyState));
+
+  customElements.define('comp-constructor', class CompConstructor extends HTMLElement {
+    constructor() {
+      super();
+      console.log(this.tagName);
+    }
+  });
+  customElements.define('comp-connected', class CompConnected extends HTMLElement {
+    connectedCallback() {
+      console.log(this.tagName);
+    }
+  });
+</script>
+
+<body>
+<h3>Test of ParserBreakEvent with script and web-comp close together</h3>
+
+<comp-constructor></comp-constructor><comp-connected></comp-connected>
+
+<comp-connected></comp-connected><comp-constructor></comp-constructor>
+
+<script>console.log("1");</script><comp-constructor></comp-constructor>
+
+<script>console.log("2");</script><comp-connected></comp-connected>
+
+<comp-constructor></comp-constructor><script>console.log("3");</script>
+
+<comp-connected></comp-connected><script>console.log("4");</script>
+
+</body>

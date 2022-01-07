@@ -1,0 +1,27 @@
+<script src="../parse.js"></script>
+<script>
+  function test(e) {
+    console.log(Array.from(e.endedNodes()).map(n => n.nodeName));
+    console.log(Array.from(e.openNodes()).map(n => n.tagName));
+  }
+  window.addEventListener('parser-break', test, true);
+  document.addEventListener('readystatechange', _ => console.log(document.readyState));
+
+  customElements.define('web-comp', class WebComp extends HTMLElement{
+    constructor() {
+      super();
+      console.log("constructor");
+    }
+  });
+</script>
+
+<h3>Test of ParserObserver endedNodes</h3>
+<main>
+  <div>
+    <web-comp></web-comp>
+    <span>
+      <b>Hello sunshine</b>
+    </span>
+  </div>
+  <web-comp></web-comp>
+</main>

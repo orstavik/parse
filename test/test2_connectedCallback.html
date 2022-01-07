@@ -1,0 +1,26 @@
+<script src="../parse.js"></script>
+<script>
+  function check(x) {
+    console.log(x);
+    Promise.resolve().then(() => Promise.resolve().then(() => console.log('mm' + x)));
+  }
+
+  window.addEventListener('parser-break', e => check(e.target === document ? '9' : e.target.textContent[0]), true);
+  document.addEventListener('readystatechange', () => console.log(document.readyState), {once: true});
+
+  const tests = ["8", "7", "6", "5", "3", "2"];
+  customElements.define('web-comp', class WebComp extends HTMLElement {
+    constructor() {
+      super();
+      check(tests.pop());
+    }
+
+    connectedCallback() {
+      check(tests.pop());
+    }
+  });
+</script>
+
+<h3>Test of ParserBreakEvent with connectedCallback</h3>
+<!--1--><web-comp></web-comp>
+<!--4--><web-comp></web-comp><web-comp></web-comp>
