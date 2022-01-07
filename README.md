@@ -17,7 +17,7 @@ However, with web components there are *two* ways that JS scripts/functions can 
 The original Firefox `beforescriptexecute` event only triggers before `<script>` elements (1), and
 *not* before custom element constructor() and ...Callback()s.
 
-The ParserBreakEvent triggers before *both* custom elements *and* custom element constructors(),
+The `parse` event triggers before *both* custom elements *and* custom element constructors(),
 with the following *two* exceptions:.
 a. If the last element added to the DOM is the same, then there will be no second beforescriptevent,
 even though two different scripts are technically triggered. There are two examples of such a situation:
@@ -26,32 +26,28 @@ II. <web-comp-x></web-comp-x><web-comp><web-comp>   where web-comp-x implements 
 
 When a web component's <start-tag> *immediately* follows either a <script> or another <web-comp-x>
 (and where web-comp-x implements a custom connectedCallback()),
-then there will be no ParserBreakEvent trigger *before* the web-comp constructor.
+then there will be no `parse` event trigger *before* the web-comp constructor.
 
 Note: When would a custom element start tag immediately follow a <script>, <start-tag>, or <end-tag>?
 1. For some container elements whitespace might be meaningful. In such container elements no whitespace is meaningful.
 2. An html minifier of some sort might remove all whitespace.
    In such situations custom elements *can* immediately follow either <script> or
-   other custom elements' <start-tag> or <end-tag>. And in such sitautions, no ParserBreakEvent event will be
-   dispatched.
+   other custom elements' <start-tag> or <end-tag>. And in such sitautions, no `parse` event will be dispatched.
 
-## WhatIs: the `.target` of the `ParserBreakEvent` event?
+## WhatIs: the `.target` of the `parse` event?
 
-The `target` of the `ParserBreakEvent` event is the last element the parser has added to the DOM.
+The `target` of the `parse` event is the last element the parser has added to the DOM.
 a) For sync `<script>`'s that is the <script> element itself. The <script> element is always added to the DOM before the
 javascript functions it contains are triggered.
 b) When web component constructors are triggered, the web component itself is not yet added to the DOM.
 This means that the last element added by the parser to the DOM is either a) a previous sibling node, b) the parent
 element, or c) a descendant of a previous sibling.
 
-Most commonly, web component start tags are preceded by whitespace. Therefore, most commonly the `target` of a
-ParserBreakEvent event would be a text node.
+Most commonly, web component start tags are preceded by whitespace. Therefore, most commonly the `target` of a `parse` event would be a text node.
 
-## How is the ParserBreakEvent implemented?
+## How is the `parse` event implemented?
 
-During "loading"/interpretation of the main document a
-`new MutationObserver(callback).observe(document.documentElement, {childList: true, subtree: true});`
-will aggregate all changes and only *break off* and trigger either
+During "loading"/interpretation of the main document a `new MutationObserver(callback).observe(document.documentElement, {childList: true, subtree: true});` will aggregate all changes and only *break off* and trigger either
 1. as a separte macro-task *before* a <script> begins,
 2. as a micro-task that is added to a connectedCallback() macro-task for an already defined custom element,
 3. as a separate macro-task *before* the constructor() of an already defined custom element,
