@@ -38,6 +38,12 @@
           yield added;
     }
 
+    * endedElements() {
+      for (let n of this.endedNodes())
+        if(n instanceof Element)
+          yield n;
+    }
+
     * addedNodes() {
       for (let list of this.#added)
         for (let n of (list instanceof XPathResult ? xpathIterator(list) : addedNodes(list)))
