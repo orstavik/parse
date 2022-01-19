@@ -1,7 +1,7 @@
 <script src="../parse.js"></script>
 <script defer src="data:text/html;charset=utf-8,console.log(%22defer%22)"></script>
 <script>
-  window.addEventListener('parser-break',e => console.log(e.target === document ? "the end" : e.target.textContent[0]), true);
+  window.addEventListener('parse',e => console.log(e.target === document ? "the end" : e.target.textContent[0]), true);
   document.addEventListener('readystatechange', _ => console.log(document.readyState));
 
   const tests = ["4", "2"];

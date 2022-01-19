@@ -5,7 +5,7 @@
     Promise.resolve().then(() => Promise.resolve().then(() => console.log('mm' + x)));
   }
 
-  window.addEventListener('parser-break', e => check(e.target === document ? '7' : e.target.textContent[0]), true);
+  window.addEventListener('parse', e => check(e.target === document ? '7' : e.target.textContent[0]), true);
   document.addEventListener('readystatechange', () => console.log(document.readyState), {once: true});
 
   const tests = ["4", "2"];

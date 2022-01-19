@@ -4,7 +4,7 @@
     console.log('ended', ...Array.from(e.endedNodes()).map(n => n.nodeName));
     console.log('open', ...Array.from(e.openNodes()).map(n => n.tagName));
   }
-  window.addEventListener('parser-break', test, {capture: true});
+  window.addEventListener('parse', test, {capture: true});
 </script>
 <script src="../parse.js"></script>
 <script>

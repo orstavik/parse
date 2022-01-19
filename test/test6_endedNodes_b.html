@@ -4,7 +4,7 @@
     console.log(Array.from(e.endedNodes()).map(n => n.nodeName));
     console.log(Array.from(e.openNodes()).map(n => n.tagName));
   }
-  window.addEventListener('parser-break', test, true);
+  window.addEventListener('parse', test, true);
   document.addEventListener('readystatechange', _ => console.log(document.readyState));
 
   customElements.define('web-comp', class WebComp extends HTMLElement{

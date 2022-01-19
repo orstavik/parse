@@ -19,7 +19,7 @@
     #stillOpen;
 
     constructor(listsWithAdded, previouslyOpen, stillOpen = []) {
-      super('parser-break');
+      super('parse');
       this.#added = listsWithAdded;
       this.#previouslyOpen = previouslyOpen;
       this.#stillOpen = stillOpen;
