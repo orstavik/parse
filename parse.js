@@ -13,13 +13,13 @@
       yield xpr[i] ??= xpr.snapshotItem(i);
   }
 
-  class ParserBreakEvent extends Event {
+  class ParseEvent extends Event {
     #added;
     #previouslyOpen;
     #stillOpen;
 
     constructor(listsWithAdded, previouslyOpen, stillOpen = []) {
-      super('parse');
+      super('parse', {bubbles: true});
       this.#added = listsWithAdded;
       this.#previouslyOpen = previouslyOpen;
       this.#stillOpen = stillOpen;
@@ -68,7 +68,7 @@
         this.disconnect();
         (mrs[mrs.length - 1].addedNodes[0] === c) && (c.remove(), mrs.pop());              //MO-readystatechange race #2
         document.removeEventListener('readystatechange', touchDom, {capture: true});       //MO-readystatechange race #2
-        return dispatchEventOG.call(document, new ParserBreakEvent([...addeds, mrs], openEnded));
+        return dispatchEventOG.call(document, new ParseEvent([...addeds, mrs], openEnded));
       }
       //3. A parser-break
       addeds.push(mrs);
@@ -81,7 +81,7 @@
       openEnded = [];
       for (let n = lastAdded; n; n = n.parentElement)
         n.nodeType === Node.ELEMENT_NODE && n.tagName !== "SCRIPT" && openEnded.unshift(n);
-      dispatchEventOG.call(lastAdded, new ParserBreakEvent(addeds.splice(0), previousOpen, openEnded));
+      dispatchEventOG.call(lastAdded, new ParseEvent(addeds.splice(0), previousOpen, openEnded));
     }
   }
 
