@@ -1,11 +1,12 @@
 # The `parse` event
 
-* the `.target` is the last parsed node in the `document`.
-* `{bubbles: true}`
-
 The `parse` event is dispatched after the browser has parsed and added a new fragment of the main document to the DOM.
 
-To use it, add `<script src="https://cdn.jsdelivr.net/gh/orstavik/parse/parse.js"></script>` in your main document before you intend to listen for it.
+* `<script src="https://cdn.jsdelivr.net/gh/orstavik/parse@v1.0.1/parse.js"></script>` 
+* `.target` is the last parsed node in the `document`.
+* `{bubbles: true}`
+
+[Unit tests in action](https://orstavik.github.io/parse/test/test.html)
 
 ## `parse` vs. `beforescriptexecute`
 
