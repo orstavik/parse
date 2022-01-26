@@ -1,11 +1,11 @@
 <script src="../parse.js"></script>
 <script>
   function test(e) {
-    console.log(Array.from(e.endedNodes()).map(n => n.nodeName));
-    console.log(Array.from(e.openNodes()).map(n => n.tagName));
+    console.log([...e.endedNodes()].map(n => n.nodeName), [...e.openNodes()].map(n => n.nodeName));
   }
   window.addEventListener('parse', test, true);
-  document.addEventListener('readystatechange', _ => console.log(document.readyState));
+  document.addEventListener('readystatechange', _ => console.log(document.readyState), {once: true});
+
   customElements.define('web-comp', class WebComp extends HTMLElement {
     connectedCallback() {
       console.log("connected");

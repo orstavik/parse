@@ -1,14 +1,14 @@
 <script>
   function test(e) {
-    console.log('added', ...Array.from(e.addedNodes()).map(n => n.nodeName));
-    console.log('ended', ...Array.from(e.endedNodes()).map(n => n.nodeName));
-    console.log('open', ...Array.from(e.openNodes()).map(n => n.tagName));
+    console.log('added', ...[...e.addedNodes()].map(n => n.nodeName));
+    console.log('ended', ...[...e.endedNodes()].map(n => n.nodeName));
+    console.log('open', ...[...e.openNodes()].map(n => n.nodeName));
   }
   window.addEventListener('parse', test, {capture: true});
 </script>
 <script src="../parse.js"></script>
 <script>
-  document.addEventListener('readystatechange', _ => console.log(document.readyState));
+  document.addEventListener('readystatechange', _ => console.log(document.readyState), {once: true});
 
   customElements.define('comp-constructor', class CompConstructor extends HTMLElement {
     constructor() {

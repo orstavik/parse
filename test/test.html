@@ -3,10 +3,16 @@
   <script expected>
     ["1", "2", "3", "4", "5", "6", "the end", "interactive", "defer", "complete"]
   </script>
+  <script expected="Chrome97.0.4692.71_">
+    ["1", "2", "3", "4", "5", "6", "C", "the end", "interactive", "defer", "complete"]
+  </script>
 </test-html>
 <test-html test="test1_macro.html">
   <script expected>
     ["1", "mm1", "2", "mm2", "3", "mm3", "4", "mm4", "5", "mm5", "6", "mm6", "7", "mm7", "interactive"]
+  </script>
+  <script expected="Chrome97.0.4692.71_">
+    ["1", "mm1", "2", "mm2", "3", "mm3", "4", "mm4", "5", "mm5", "6", "mm6", "C", "mmC", "7", "mm7", "interactive"]
   </script>
 </test-html>
 <test-html test="test2_connectedCallback.html">
@@ -23,59 +29,74 @@
   <script expected>
     ["1", "2", "3", "4", "5", "6", "html", "interactive"]
   </script>
+  <script expected="Chrome97.0.4692.71_">
+    ["1", "2", "3", "4", "5", "6", "C", "html", "interactive"]
+  </script>
 </test-html>
 <test-html test="test5_skip_connectedCallbackBreaks.html">
   <script expected>
     ["1", "m1", "x1", "x2", "2", "m2", "y", "3", "m3", "x1", "x2", "4", "m4", "y", "5", "m5", "y", "6", "m6", "x1", "x2", "7", "m7", "y", "y", "html", "mhtml", "interactive"]
   </script>
+  <script expected="Chrome97.0.4692.71_">
+    ["1", "m1", "x1", "x2", "2", "m2", "y", "3", "m3", "x1", "x2", "4", "m4", "y", "5", "m5", "y", "6", "m6", "x1", "x2", "7", "m7", "y", "y", "C", "mC", "html", "mhtml", "interactive"]
+  </script>
 </test-html>
 <test-html test="test6_endedNodes_a.html">
-  <script expected>
-    [
-      ["HEAD", "#text", "H3", "#text", "#text", "#text", "#text", "SCRIPT", "#text"],
-      ["HTML", "BODY", "MAIN", "DIV"],
-      "a",
-      ["DIV", "#text", "SPAN", "#text", "B", "#text", "#text", "#text", "#text", "SCRIPT", "#text"],
-      ["HTML", "BODY", "MAIN"],
-      "b",
-      ["HTML", "BODY", "MAIN", "#text"],
-      [],
-      "interactive",
-      "complete"
-    ]
-  </script>
+  <script expected>[
+    [["HEAD", "#text", "H3", "#text", "#text", "#text", "#text", "SCRIPT", "#text"], ["HTML", "BODY", "MAIN", "DIV"]],
+    "a",
+    [["DIV", "#text", "SPAN", "#text", "B", "#text", "#text", "#text", "#text", "SCRIPT", "#text"], ["HTML", "BODY", "MAIN"]],
+    "b",
+    [["HTML", "BODY", "MAIN", "#text"], []],
+    "interactive"
+  ]</script>
+  <script expected="Chrome97.0.4692.71_">[
+    [["HEAD", "#text", "H3", "#text", "#text", "#text", "#text", "SCRIPT", "#text"], ["HTML", "BODY", "MAIN", "DIV"]],
+    "a",
+    [["DIV", "#text", "SPAN", "#text", "B", "#text", "#text", "#text", "#text", "SCRIPT", "#text"], ["HTML", "BODY", "MAIN"]],
+    "b",
+    [["#text"], ["HTML", "BODY", "MAIN"]],
+    [["HTML", "BODY", "MAIN"], []],
+    "interactive"
+  ]</script>
 </test-html>
 <test-html test="test6_endedNodes_b.html">
-  <script expected>
-    [
-      ["HEAD", "#text", "H3", "#text", "#text", "#text", "#text"],
-      ["HTML", "BODY", "MAIN", "DIV"],
-      "constructor",
-      ["DIV", "WEB-COMP", "#text", "SPAN", "#text", "B", "#text", "#text", "#text", "#text"],
-      ["HTML", "BODY", "MAIN"],
-      "constructor",
-      ["HTML", "BODY", "MAIN", "WEB-COMP", "#text"],
-      [],
-      "interactive",
-      "complete"
-    ]
-  </script>
+  <script expected>[
+    [["HEAD", "#text", "H3", "#text", "#text", "#text", "#text"], ["HTML", "BODY", "MAIN", "DIV"]],
+    "constructor",
+    [["DIV", "WEB-COMP", "#text", "SPAN", "#text", "B", "#text", "#text", "#text", "#text"], ["HTML", "BODY", "MAIN"]],
+    "constructor",
+    [["HTML", "BODY", "MAIN", "WEB-COMP", "#text"], []],
+    "interactive"
+  ]</script>
+  <script expected="Chrome97.0.4692.71_">[
+    [["HEAD", "#text", "H3", "#text", "#text", "#text", "#text"], ["HTML", "BODY", "MAIN", "DIV"]],
+    "constructor",
+    [["DIV", "WEB-COMP", "#text", "SPAN", "#text", "B", "#text", "#text", "#text", "#text"], ["HTML", "BODY", "MAIN"]],
+    "constructor",
+    [["WEB-COMP", "#text"], ["HTML", "BODY", "MAIN"]],
+    [["HTML", "BODY", "MAIN"], []],
+    "interactive"
+  ]</script>
 </test-html>
 <test-html test="test6_endedNodes_c.html">
-  <script expected>
-    [
-      ["HEAD", "#text", "H3", "#text", "#text", "#text", "#text"],
-      ["HTML", "BODY", "MAIN", "DIV"],
-      "connected",
-      ["DIV", "WEB-COMP", "#text", "SPAN", "#text", "B", "#text", "#text", "#text", "#text"],
-      ["HTML", "BODY", "MAIN"],
-      "connected",
-      ["HTML", "BODY", "MAIN", "WEB-COMP", "#text"],
-      [],
-      "interactive",
-      "complete"
-    ]
-  </script>
+  <script expected>[
+    [["HEAD", "#text", "H3", "#text", "#text", "#text", "#text"], ["HTML", "BODY", "MAIN", "DIV"]],
+    "connected",
+    [["DIV", "WEB-COMP", "#text", "SPAN", "#text", "B", "#text", "#text", "#text", "#text"], ["HTML", "BODY", "MAIN"]],
+    "connected",
+    [["HTML", "BODY", "MAIN", "WEB-COMP", "#text"], []],
+    "interactive"
+  ]</script>
+  <script expected="Chrome97.0.4692.71_">[
+    [["HEAD", "#text", "H3", "#text", "#text", "#text", "#text"], ["HTML", "BODY", "MAIN", "DIV"]],
+    "connected",
+    [["DIV", "WEB-COMP", "#text", "SPAN", "#text", "B", "#text", "#text", "#text", "#text"], ["HTML", "BODY", "MAIN"]],
+    "connected",
+    [["WEB-COMP", "#text"], ["HTML", "BODY", "MAIN"]],
+    [["HTML", "BODY", "MAIN"], []],
+    "interactive"
+  ]</script>
 </test-html>
 <test-html test="test7_script_before_web-comp.html">
   <script expected>
@@ -122,9 +143,59 @@
       ["added", "#text"],
       ["ended", "HTML", "BODY", "#text"],
       "open",
-      "interactive",
-      "complete"
+      "interactive"
     ]
   </script>
+  <script expected="Chrome97.0.4692.71_">[
+    ["added", "HTML", "HEAD", "BASE", "SCRIPT", "#text", "SCRIPT", "#text", "#text", "SCRIPT", "#text", "SCRIPT", "#text"],
+    ["ended", "BASE", "SCRIPT", "#text", "SCRIPT", "#text", "#text", "SCRIPT", "#text", "SCRIPT", "#text"],
+    ["open", "HTML", "HEAD"],
+    ["added", "#text", "BODY", "#text", "H3", "#text", "#text"],
+    ["ended", "HEAD", "#text", "#text", "H3", "#text", "#text"],
+    ["open", "HTML", "BODY"],
+    "COMP-CONSTRUCTOR",
+    ["added", "COMP-CONSTRUCTOR"],
+    "ended",
+    ["open", "HTML", "BODY", "COMP-CONSTRUCTOR"],
+    "COMP-CONNECTED",
+    ["added", "COMP-CONNECTED", "#text"],
+    ["ended", "COMP-CONSTRUCTOR", "COMP-CONNECTED", "#text"],
+    ["open", "HTML", "BODY"],
+    "COMP-CONNECTED",
+    "COMP-CONSTRUCTOR",
+    ["added", "COMP-CONNECTED", "COMP-CONSTRUCTOR", "#text", "SCRIPT", "#text"],
+    ["ended", "COMP-CONNECTED", "COMP-CONSTRUCTOR", "#text", "SCRIPT", "#text"],
+    ["open", "HTML", "BODY"],
+    "1",
+    "COMP-CONSTRUCTOR",
+    ["added", "COMP-CONSTRUCTOR", "#text", "SCRIPT", "#text"],
+    ["ended", "COMP-CONSTRUCTOR", "#text", "SCRIPT", "#text"],
+    ["open", "HTML", "BODY"],
+    "2",
+    "COMP-CONNECTED",
+    ["added", "COMP-CONNECTED", "#text"],
+    ["ended", "COMP-CONNECTED", "#text"],
+    ["open", "HTML", "BODY"],
+    "COMP-CONSTRUCTOR",
+    ["added", "COMP-CONSTRUCTOR", "SCRIPT", "#text"],
+    ["ended", "COMP-CONSTRUCTOR", "SCRIPT", "#text"],
+    ["open", "HTML", "BODY"],
+    "3",
+    ["added", "#text"],
+    ["ended", "#text"],
+    ["open", "HTML", "BODY"],
+    "COMP-CONNECTED",
+    ["added", "COMP-CONNECTED", "SCRIPT", "#text"],
+    ["ended", "COMP-CONNECTED", "SCRIPT", "#text"],
+    ["open", "HTML", "BODY"],
+    "4",
+    ["added", "#text"],
+    ["ended", "#text"],
+    ["open", "HTML", "BODY"],
+    "added",
+    ["ended", "HTML", "BODY"],
+    "open",
+    "interactive"
+  ]</script>
 </test-html>
-<script type="module" src="https://cdn.jsdelivr.net/gh/orstavik/TestHTML/TestHTML.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/gh/orstavik/TestHTML@v1.0.2/TestHTML.js"></script>

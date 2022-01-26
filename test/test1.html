@@ -1,23 +1,22 @@
 <script src="../parse.js"></script>
 <script defer src="data:text/html;charset=utf-8,console.log(%22defer%22)"></script>
 <script>
-  window.addEventListener('parse',e => console.log(e.target === document ? "the end" : e.target.textContent[0]), true);
+  window.addEventListener('parse', e => console.log(e.target === document ? "the end" : e.target.textContent[0]), true);
   document.addEventListener('readystatechange', _ => console.log(document.readyState));
 
-  const tests = ["4", "2"];
+  let first = 1;
   customElements.define('web-comp', class WebComp extends HTMLElement {
     constructor() {
       super();
-      console.log(tests.pop());
+      console.log(first--? "2": "4");
     }
   });
 </script>
 
-<body>
 <h3>Test of `parse` event</h3>
 <!--1--><web-comp a>
   <!--3--><web-comp b></web-comp>
 </web-comp>
 
 <script>5; console.log("6");</script>
-</body>
+<!--Chrome97.0.4692.71-->
