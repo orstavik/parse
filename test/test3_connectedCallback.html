@@ -1,6 +1,6 @@
 <script src="../parse.js"></script>
 <script>
-  window.addEventListener('parse',e=> console.log(e.target === document ? 'the end' : e.target.textContent), true);
+  window.addEventListener('parse',e=> console.log(e.target === document ? 'the end' : e.target.textContent));
   document.addEventListener('readystatechange', () => console.log(document.readyState), {once: true});
 
   customElements.define('web-comp', class WebComp extends HTMLElement {

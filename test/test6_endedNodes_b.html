@@ -3,7 +3,7 @@
   function test(e) {
     console.log([...e.endedNodes()].map(n => n.nodeName), [...e.openNodes()].map(n => n.nodeName));
   }
-  window.addEventListener('parse', test, true);
+  window.addEventListener('parse', test);
   document.addEventListener('readystatechange', _ => console.log(document.readyState), {once: true});
 
   customElements.define('web-comp', class WebComp extends HTMLElement{

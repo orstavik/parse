@@ -6,7 +6,7 @@
     const txt = e.target === document ? "html" : e.target.textContent[0];
     return console.log(txt), Promise.resolve().then(()=> console.log("m" + txt));
   }
-  window.addEventListener('parse', check, true);
+  window.addEventListener('parse', check);
   document.addEventListener('readystatechange', _ => console.log(document.readyState), {once: true});
 
   customElements.define('comp-constructor', class CompConstructor extends HTMLElement {

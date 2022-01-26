@@ -1,6 +1,6 @@
 <script src="../parse.js"></script>
 <script>
-  window.addEventListener('parse', e => console.log(e.target === document ? "html" : e.target.textContent[0]), true);
+  window.addEventListener('parse', e => console.log(e.target === document ? "html" : e.target.textContent[0]));
   document.addEventListener('readystatechange', _ => console.log(document.readyState), {once: true});
 
   let first = 1;
