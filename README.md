@@ -102,3 +102,7 @@ we add an event listener for readystatechange:interactive, and then we force a c
 we then remove that node in the MO immediately, thus leaving the DOM intact.
 This will trick the MO to run as a macrotask (the readystatechange event is macro task event)
 before the readystatechange events.
+
+## race condition in Chrome97.0.4692.71
+
+When the last MO is triggered in Chrome97.0.4692.71, then the `document.readyState` remains at `loading` instead of being switched to `interactive` as it was before. This means that when the last MO runs, it is impossible to know if the document has been parsed till the end, or if there are more elements coming. Older Chrome did not behave like this, and neither does the other browsers. This means that Chrome97 will make an extra calls at the end, and many elements such as `<body>` and `<html>` will be considered still open even though they are actually closed.
