@@ -1,4 +1,4 @@
-(function (dispatchEventOG) {
+(function (dispatchEventOG, addEventListenerOG, removeEventListenerOG) {
   if (document.readyState !== 'loading')
     throw new Error('new ParserObserver(..) can only be created while document is loading');
 
@@ -54,7 +54,7 @@
   function makeOnMoObserver() {
     const c = new Comment();                                                               //MO-readystatechange race #1
     const touchDom = _ => document.body.append(c);                                         //MO-readystatechange race #1
-    document.addEventListener('readystatechange', touchDom, {capture: true, once: true});  //MO-readystatechange race #1
+    addEventListenerOG.call(document, 'readystatechange', touchDom, {capture: true, once: true});  //MO-readystatechange race #1
 
     let openEnded = [];
     let addeds = [document.evaluate("//node()", document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null)];
@@ -67,7 +67,7 @@
       if (document.readyState !== 'loading') {
         this.disconnect();
         (mrs[mrs.length - 1].addedNodes[0] === c) && (c.remove(), mrs.pop());              //MO-readystatechange race #2
-        document.removeEventListener('readystatechange', touchDom, {capture: true});       //MO-readystatechange race #2
+        removeEventListenerOG.call(document, 'readystatechange', touchDom, {capture: true});       //MO-readystatechange race #2
         return dispatchEventOG.call(document, new ParseEvent([...addeds, mrs], openEnded));
       }
       //3. A parser-break
@@ -87,4 +87,4 @@
 
   const mo = new MutationObserver(makeOnMoObserver());
   mo.observe(document.documentElement, {childList: true, subtree: true});
-})(dispatchEvent);
+})(dispatchEvent, addEventlistener, removeEventListener);
