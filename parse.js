@@ -87,4 +87,4 @@
 
   const mo = new MutationObserver(makeOnMoObserver());
   mo.observe(document.documentElement, {childList: true, subtree: true});
-})(dispatchEvent, addEventlistener, removeEventListener);
+})(dispatchEvent, addEventListener, removeEventListener);
