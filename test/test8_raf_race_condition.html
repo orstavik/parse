@@ -1,0 +1,12 @@
+<script src="https://cdn.jsdelivr.net/gh/orstavik/parse@v1.0.2/parse.js"></script>
+<script>window.addEventListener("parse", e => {
+  console.log("added:", ...[...e.addedNodes()].map(el=>el.nodeName))
+  console.log("ended:", ...[...e.endedElements()].map(el=>el.nodeName))
+});</script>
+<div>hello sunshine</div>
+
+<script>
+  requestAnimationFrame(() =>
+    document.querySelector("div").innerText += "bug, div is now ended twice"
+  );
+</script>
