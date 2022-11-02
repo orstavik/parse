@@ -60,6 +60,25 @@
     "interactive"
   ]</script>
 </test-html>
+<test-html test="test6_addedNodes_a.html">
+  <script expected>[
+    [["HTML","HEAD","BASE","SCRIPT","#text","SCRIPT","#text","#text","SCRIPT","#text","BODY","H3","#text","#text","MAIN","#text","DIV","#text","SCRIPT","#text"],["HTML:0","HEAD:0","BASE:1","SCRIPT:0","SCRIPT:0","SCRIPT:1","BODY:0","H3:0","MAIN:0","DIV:0","SCRIPT:1"]],
+    "a",
+    [["#text","SPAN","#text","B","#text","#text","#text","#text","SCRIPT","#text"],["SPAN:4","B:2","SCRIPT:1"]],
+    "b",
+    "interactive",
+    [["#text"],[]]
+  ]</script>
+  <script expected="Chrome97.0.4692.71_">[
+    [["HTML","HEAD","BASE","SCRIPT","#text","SCRIPT","#text","#text","SCRIPT","#text","BODY","H3","#text","#text","MAIN","#text","DIV","#text","SCRIPT","#text"],["HTML:0","HEAD:0","BASE:1","SCRIPT:0","SCRIPT:0","SCRIPT:1","BODY:0","H3:0","MAIN:0","DIV:0","SCRIPT:1"]],
+    "a",
+    [["#text","SPAN","#text","B","#text","#text","#text","#text","SCRIPT","#text"],["SPAN:4","B:2","SCRIPT:1"]],
+    "b",
+    [["#text"],[]],
+    [[],[]],
+    "interactive"
+  ]</script>
+</test-html>
 <test-html test="test6_endedNodes_b.html">
   <script expected>[
     [["HEAD", "#text", "H3", "#text", "#text", "#text", "#text"], ["HTML", "BODY", "MAIN", "DIV"]],

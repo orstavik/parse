@@ -1,0 +1,22 @@
+<script>
+  window.addEventListener('parse', e =>
+    console.log(
+      [...e.addedNodes()].map(n => n.nodeName),
+      [...e.addedElements()].map(el => el.tagName + ":" + el.attributes.length)
+    )
+  );
+  document.addEventListener('readystatechange', _ => console.log(document.readyState), {once: true});
+</script>
+<script src="../parse.js"></script>
+
+<h3>Test of ParserObserver endedNodes</h3>
+<main>
+  <div>
+    <script id="3">console.log("a")</script>
+    <span bob is your uncle>a
+      <b hello sunshine>hello sunshine</b>b
+    </span>c
+  </div>
+  d
+  <script id="6">console.log("b")</script>
+</main>

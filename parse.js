@@ -31,7 +31,7 @@
 
     * endedNodes() {
       for (let n of this.#previouslyOpen)
-        if(this.#stillOpen.indexOf(n)===-1)
+        if (this.#stillOpen.indexOf(n) === -1)
           yield n;
       for (let added of this.addedNodes())
         if (this.#stillOpen.indexOf(added) === -1)
@@ -40,13 +40,19 @@
 
     * endedElements() {
       for (let n of this.endedNodes())
-        if(n instanceof Element)
+        if (n instanceof Element)
           yield n;
     }
 
     * addedNodes() {
       for (let list of this.#added)
         for (let n of (list instanceof XPathResult ? xpathIterator(list) : addedNodes(list)))
+          yield n;
+    }
+
+    * addedElements() {
+      for (let n of this.addedNodes())
+        if (n instanceof Element)
           yield n;
     }
   }

@@ -2,11 +2,22 @@
 
 The `parse` event is dispatched after the browser has parsed and added a new fragment of the main document to the DOM.
 
-* `<script src="https://cdn.jsdelivr.net/gh/orstavik/parse@v1.0.1/parse.js"></script>` 
+* `<script src="https://cdn.jsdelivr.net/gh/orstavik/parse@v1.0.1/parse.js"></script>`
 * `.target` is the last parsed node in the `document`.
 * `{bubbles: true}`
 
-[Unit tests in action](https://orstavik.github.io/parse/test/test.html)
+[Unit tests in action](https://orstavik.github.io/parse/test/)
+
+## When to include the script?
+
+You want to include the listener for the parse event before your use of the script. This ensures that you don't loose any `parse` events and their `.endedNodes()` and `.addedNodes()`.
+
+```html
+<script>
+  window.addEventListener("parse", e => console.log("do your thing", e));
+</script>
+<script src="parse.js"></script>
+```
 
 ## `parse` vs. `beforescriptexecute`
 
@@ -15,6 +26,7 @@ The `parse` event resemble the native `beforescriptexecute` event.
 The `beforescriptexecute` event is dispatched before a `<script>` is triggered during loading of the main document. As such, the `beforescriptexecute` event signify a break when the parser switches from adding native elements into the DOM to running some JS script.
 
 However, with web components there are *two* ways that JS scripts/functions can be triggered during loading:
+
 1. the good old `<script>` (and `<script async>`?), and
 2. the `.constructor()`, `.attributeChangedCallback()`, and `.connectedCallback()` of elements already defined and placed in the DOM.
 
@@ -33,6 +45,7 @@ When a web component's <start-tag> *immediately* follows either a <script> or an
 then there will be no `parse` event trigger *before* the web-comp constructor.
 
 Note: When would a custom element start tag immediately follow a <script>, <start-tag>, or <end-tag>?
+
 1. For some container elements whitespace might be meaningful. In such container elements no whitespace is meaningful.
 2. An html minifier of some sort might remove all whitespace.
    In such situations custom elements *can* immediately follow either <script> or
@@ -52,6 +65,7 @@ Most commonly, web component start tags are preceded by whitespace. Therefore, m
 ## How is the `parse` event implemented?
 
 During "loading"/interpretation of the main document a `new MutationObserver(callback).observe(document.documentElement, {childList: true, subtree: true});` will aggregate all changes and only *break off* and trigger either
+
 1. as a separte macro-task *before* a <script> begins,
 2. as a micro-task that is added to a connectedCallback() macro-task for an already defined custom element,
 3. as a separate macro-task *before* the constructor() of an already defined custom element,
@@ -84,6 +98,7 @@ or after the first 'readystatechange' event that marks the start of document.rea
 ## connectedCallback macro-task mixup
 
 When the predictive parser creates an already defined web-comp that:
+
 1) has NO constructor() definition,
 2) triggers NO attributeChangedCallback(), and
 3) triggers only a .connectedCallback(), then
