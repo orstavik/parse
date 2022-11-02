@@ -66,8 +66,8 @@
       //2. The end parser-break
       if (document.readyState !== 'loading') {
         this.disconnect();
-        (mrs[mrs.length - 1].addedNodes[0] === c) && (c.remove(), mrs.pop());              //MO-readystatechange race #2
-        removeEventListenerOG.call(document, 'readystatechange', touchDom, {capture: true});       //MO-readystatechange race #2
+        (mrs[mrs.length - 1].addedNodes[0] === c) && (c.remove(), mrs.pop());               //MO-readystatechange race #2
+        removeEventListenerOG.call(document, 'readystatechange', touchDom, {capture: true});//MO-readystatechange race #2
         return dispatchEventOG.call(document, new ParseEvent([...addeds, mrs], openEnded));
       }
       //3. A parser-break
